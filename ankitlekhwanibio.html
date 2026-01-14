@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biodata | Ankit Lekhwani</title>
+    <!-- Favicon: Gold Circle with 'A' -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23c5a059'/%3E%3Ctext x='50' y='55' fill='white' font-family='serif' font-weight='bold' font-size='65' text-anchor='middle' dominant-baseline='middle'%3EA%3C/text%3E%3C/svg%3E">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Rozha+One&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        :root {
+            /* Light Theme Variables */
+            --color-bg-main: #f8f9fa;
+            --color-accent-gold: #c5a059;
+            --color-accent-dark: #2c3e50;
+            --color-text-main: #2c3e50;
+            --color-text-light: #5a6b7c;
+            
+            --color-glass-bg: rgba(255, 255, 255, 0.85);
+            --color-glass-border: rgba(255, 255, 255, 0.9);
+            --color-glass-shadow: rgba(197, 160, 89, 0.15);
+            
+            --radius-card: 1.5rem;
+            --radius-pill: 9999px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--color-bg-main);
+            color: var(--color-text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* --- Dynamic Background Animation --- */
+        .background-container {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            overflow: hidden;
+            background: linear-gradient(135deg, #fffdf5 0%, #eee4d5 100%);
+        }
+
+        .background-blobs {
+            position: absolute;
+            inset: 0;
+            background-image: 
+                radial-gradient(circle at 10% 10%, rgba(197, 160, 89, 0.1) 0%, transparent 40%), 
+                radial-gradient(circle at 90% 90%, rgba(44, 62, 80, 0.08) 0%, transparent 40%);
+        }
+
+        #particle-field {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: #b8860b; 
+            box-shadow: 0 0 4px rgba(184, 134, 11, 0.3);
+            animation: float-particle linear infinite;
+        }
+
+        @keyframes float-particle {
+            0% { transform: translateY(110vh) scale(0.5); opacity: 0; }
+            20% { opacity: 0.6; }
+            80% { opacity: 0.6; }
+            100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+        }
+
+        /* --- Language Selector --- */
+        .lang-switch-container {
+            position: fixed;
+            top: 1.5rem;
+            right: 1.5rem;
+            z-index: 60;
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 5px;
+            border-radius: 20px;
+            border: 1px solid rgba(0,0,0,0.1);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            transition: opacity 0.6s ease;
+        }
+        
+        #lang-switch {
+            opacity: 0; 
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+
+        .lang-btn {
+            border: none;
+            background: transparent;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            color: var(--color-text-light);
+            transition: all 0.3s;
+        }
+
+        .lang-btn.active {
+            background: var(--color-accent-gold);
+            color: white;
+            box-shadow: 0 2px 5px rgba(197, 160, 89, 0.4);
+        }
+
+        /* --- Header / Top Panel --- */
+        .header-panel {
+            position: fixed;
+            top: 1.5rem;
+            z-index: 50;
+            width: 90%;
+            max-width: 600px;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            border-radius: var(--radius-pill);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            padding: 1rem 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .header-top-text {
+            font-size: 0.75rem; 
+            font-weight: 600;
+            color: var(--color-accent-gold);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 0.2rem;
+            position: relative;
+        }
+        
+        .header-top-text::before, .header-top-text::after {
+            content: '•';
+            color: var(--color-accent-dark);
+            opacity: 0.5;
+            margin: 0 10px;
+        }
+
+        .header-name {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 2rem;
+            color: var(--color-text-main);
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+            text-align: center;
+        }
+
+        /* --- Glass Components --- */
+        .glass-card {
+            background: var(--color-glass-bg);
+            border: 1px solid var(--color-glass-border);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 8px 32px var(--color-glass-shadow);
+            border-radius: var(--radius-card);
+            padding: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(197, 160, 89, 0.2);
+        }
+
+        /* Abstract Topographic Graphic Background */
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            /* Subtle Abstract Lines / Topography Pattern */
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 1000' preserveAspectRatio='none'%3E%3Cpath fill='none' stroke='%23c5a059' stroke-width='2' d='M0,500 Q250,300 500,500 T1000,500 M0,600 Q250,400 500,600 T1000,600 M0,400 Q250,200 500,400 T1000,400 M0,700 Q250,500 500,700 T1000,700 M0,300 Q250,100 500,300 T1000,300' opacity='0.5'/%3E%3Cpath fill='none' stroke='%23c5a059' stroke-width='1.5' d='M0,550 Q250,350 500,550 T1000,550 M0,450 Q250,250 500,450 T1000,450' opacity='0.3'/%3E%3C/svg%3E");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0.18; /* Increased Opacity */
+            z-index: 0;
+            pointer-events: none;
+            transform: scale(1.5) rotate(-5deg); /* Artistic positioning */
+        }
+
+        /* Remove pattern from Auth Card */
+        .auth-card::before {
+            display: none;
+        }
+
+        /* --- Main Content --- */
+        #main-container {
+            width: 100%;
+            max-width: 1000px;
+            padding: 10rem 1.5rem 5rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.8s ease;
+            height: 100vh;
+            overflow-y: auto;
+            scrollbar-width: thin;
+        }
+
+        #main-container::-webkit-scrollbar { width: 6px; }
+        #main-container::-webkit-scrollbar-thumb { background: #ccc; border-radius: 10px; }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            color: var(--color-accent-gold);
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid rgba(197, 160, 89, 0.3);
+            padding-bottom: 0.5rem;
+            display: inline-block;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .section-title::after {
+            content: '♦';
+            position: absolute;
+            right: 0;
+            bottom: -2px; 
+            color: var(--color-accent-gold);
+            font-size: 1rem;
+            background: var(--color-glass-bg); 
+            padding-left: 5px;
+        }
+
+        .grid-layout {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .info-row {
+            display: grid;
+            grid-template-columns: 140px 1fr;
+            align-items: start;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(44, 62, 80, 0.1);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .info-row:last-child { border-bottom: none; }
+
+        .label {
+            font-weight: 600;
+            color: var(--color-text-light);
+            font-size: 0.95rem;
+        }
+
+        .value {
+            font-weight: 500;
+            color: var(--color-text-main);
+            text-align: left;
+            line-height: 1.5;
+        }
+
+        /* --- Business List Styling --- */
+        .business-list {
+            list-style: none;
+            position: relative;
+            z-index: 1;
+        }
+
+        .business-item {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(44, 62, 80, 0.1);
+            color: var(--color-text-main);
+            font-size: 0.95rem;
+            display: flex;
+            align-items: baseline;
+            flex-wrap: wrap;
+        }
+
+        .business-item:last-child { border-bottom: none; }
+
+        .business-item strong {
+            font-weight: 700;
+            color: #000; /* Owner Name in Black */
+            margin-right: 5px;
+        }
+
+        .biz-name {
+            color: var(--color-accent-gold);
+            font-weight: 600;
+            font-family: 'Playfair Display', serif;
+            letter-spacing: 0.5px;
+        }
+
+        /* --- Auth Screen --- */
+        #auth-screen {
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(248, 249, 250, 0.9);
+            backdrop-filter: blur(20px);
+            transition: opacity 0.6s ease;
+        }
+
+        .auth-card {
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            padding: 3rem 2rem;
+        }
+
+        .auth-card h2 {
+            font-family: 'Playfair Display', serif;
+            color: var(--color-accent-gold);
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .input-wrapper {
+            margin: 2rem 0;
+        }
+
+        .input-wrapper input {
+            width: 100%;
+            padding: 1rem;
+            border-radius: var(--radius-pill);
+            border: 1px solid rgba(0,0,0,0.1);
+            background: white;
+            font-size: 1rem;
+            text-align: center;
+            outline: none;
+            transition: border 0.3s;
+        }
+        
+        .input-wrapper input:focus {
+            border-color: var(--color-accent-gold);
+        }
+
+        .btn-primary {
+            background: var(--color-accent-gold);
+            color: white;
+            border: none;
+            padding: 0.9rem 2.5rem;
+            border-radius: var(--radius-pill);
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(197, 160, 89, 0.3);
+        }
+        
+        /* --- Bottom CTA Button (Updated to Match .btn-primary) --- */
+        .cta-container {
+            text-align: center;
+            margin-top: 1rem;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .btn-cta {
+            display: inline-block;
+            background: var(--color-accent-gold);
+            color: white;
+            border: none;
+            padding: 0.9rem 2.5rem;
+            border-radius: var(--radius-pill);
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(197, 160, 89, 0.3);
+        }
+
+        .btn-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(197, 160, 89, 0.4);
+        }
+
+        /* Animation */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s cubic-bezier(0.2, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .header-panel { width: 95%; padding: 0.8rem 1rem; margin-top: 30px; }
+            .header-name { font-size: 1.4rem; } /* Adjusted for mobile */
+            .header-top-text { font-size: 0.7rem; }
+            
+            .info-row { grid-template-columns: 1fr; gap: 4px; }
+            .value { padding-left: 0; color: #333; }
+            .label { color: var(--color-accent-gold); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; }
+            
+            .glass-card { padding: 1.5rem; }
+            .glass-card::before { opacity: 0.15; }
+            
+            .lang-switch-container { top: 1rem; right: 50%; transform: translateX(50%); top: 10px; padding: 3px 8px; border-radius: 12px; }
+            
+            #main-container { padding-top: 10rem; }
+            
+            /* Center CTA on mobile */
+            .btn-cta { width: 100%; padding: 0.8rem; font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="background-container">
+        <div class="background-blobs"></div>
+        <div id="particle-field"></div>
+    </div>
+
+    <!-- Language Selector (Hidden initially) -->
+    <div id="lang-switch" class="lang-switch-container">
+        <button class="lang-btn active" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" onclick="setLang('hi')">हिंदी</button>
+    </div>
+
+    <!-- Password Screen -->
+    <div id="auth-screen">
+        <div class="glass-card auth-card">
+            <div style="margin-bottom: 1rem; color: var(--color-accent-gold); font-size: 2rem;">
+                <i class="fas fa-praying-hands"></i>
+            </div>
+            <h2 data-en="Radha Soami" data-hi="राधा स्वामी">Radha Soami</h2>
+            <p data-en="Protected Access" data-hi="सुरक्षित प्रवेश" style="color: var(--color-text-light); margin-bottom: 1rem;">Protected Access</p>
+            <div class="input-wrapper">
+                <!-- Added focus/blur logic here -->
+                <input type="password" id="passCode" placeholder="Enter Password" onfocus="this.placeholder=''" onblur="this.placeholder='Enter Password'">
+            </div>
+            <button class="btn-primary" onclick="checkPassword()" data-en="Unlock Profile" data-hi="प्रोफाइल खोलें">Unlock Profile</button>
+        </div>
+    </div>
+
+    <!-- Centered Header -->
+    <header class="header-panel" id="top-header">
+        <div class="header-top-text" data-en="Radha Soami" data-hi="राधा स्वामी">Radha Soami</div>
+        <div class="header-name" data-en="Ankit Lekhwani" data-hi="अंकित लेखवानी">Ankit Lekhwani</div>
+    </header>
+
+    <main id="main-container">
+        <div class="grid-layout">
+            
+            <!-- Personal Details -->
+            <div class="glass-card fade-in-up" style="animation-delay: 0.1s;">
+                <div class="section-title" data-en="Personal Details" data-hi="व्यक्तिगत विवरण">Personal Details</div>
+                
+                <div class="info-row">
+                    <span class="label" data-en="Date of Birth" data-hi="जन्म तिथि">Date of Birth</span> 
+                    <span class="value" data-en="05 May 1996" data-hi="05 मई 1996">05 May 1996</span>
+                </div>
+                
+                <div class="info-row">
+                    <span class="label" data-en="Time of Birth" data-hi="जन्म समय">Time of Birth</span> 
+                    <span class="value" data-en="06:20 A.M." data-hi="06:20 सुबह">06:20 A.M.</span>
+                </div>
+                
+                <div class="info-row">
+                    <span class="label" data-en="Place of Birth" data-hi="जन्म स्थान">Place of Birth</span> 
+                    <span class="value" data-en="Bhusawal" data-hi="भुसावल">Bhusawal</span>
+                </div>
+                
+                <div class="info-row">
+                    <span class="label" data-en="Height" data-hi="ऊंचाई">Height</span> 
+                    <span class="value">5' 11"</span>
+                </div>
+                
+                <div class="info-row">
+                    <span class="label" data-en="Complexion" data-hi="रंग-रूप">Complexion</span> 
+                    <span class="value" data-en="Fair, Sharp & Attractive" data-hi="गोरा, तीक्ष्ण और आकर्षक">Fair, Sharp & Attractive</span>
+                </div>
+                
+                <div class="info-row">
+                    <span class="label" data-en="Education" data-hi="शिक्षा">Education</span> 
+                    <span class="value" data-en="L.L.B - KC Law College, Mumbai" data-hi="एल.एल.बी - के.सी. लॉ कॉलेज, मुंबई">L.L.B - KC Law College, Mumbai</span>
+                </div>
+            </div>
+
+            <!-- Family Background -->
+            <div class="glass-card fade-in-up" style="animation-delay: 0.2s;">
+                <div class="section-title" data-en="Family Background" data-hi="पारिवारिक पृष्ठभूमि">Family Background</div>
+                
+                <div class="info-row">
+                    <span class="label" data-en="Grandfather" data-hi="दादाजी">Grandfather</span> 
+                    <span class="value" data-en="Late Shri Mewaldas T. Lekhwani" data-hi="स्व. श्री मेवालदास टी. लेखवानी">Late Shri Mewaldas T. Lekhwani</span>
+                </div>
+                
+                <div class="info-row">
+                    <span class="label" data-en="Father" data-hi="पिताजी">Father</span> 
+                    <span class="value" data-en="Shri Sadhuram M. Lekhwani" data-hi="श्री साधुराम एम. लेखवानी">Shri Sadhuram M. Lekhwani</span>
+                </div>
+                
+                <div class="info-row">
+                    <span class="label" data-en="Mother" data-hi="माताजी">Mother</span> 
+                    <span class="value" data-en="Smt. Karuna S. Lekhwani" data-hi="श्रीमती करुणा एस. लेखवानी">Smt. Karuna S. Lekhwani</span>
+                </div>
+                
+                <div class="info-row">
+                    <span class="label" data-en="Sister" data-hi="बहन">Sister</span> 
+                    <span class="value" data-en="1 (Married) - Varangaon" data-hi="1 (विवाहित) - वरणगांव">1 (Married) - Varangaon</span>
+                </div>
+                
+                <div class="info-row">
+                    <span class="label" data-en="Brother" data-hi="भाई">Brother</span> 
+                    <span class="value">
+                        <span data-en="Pravin S. Lekhwani (Married)" data-hi="प्रवीण एस. लेखवानी (विवाहित)">Pravin S. Lekhwani (Married)</span><br>
+                        <small style="opacity:0.8" data-en="(D/O Shri Gopichand Sirwani)" data-hi="(सुपुत्री श्री गोपीचंद सिरवानी)">(D/O Shri Gopichand Sirwani)</small>
+                    </span>
+                </div>
+            </div>
+
+            <!-- Roots & Heritage -->
+            <div class="glass-card fade-in-up" style="animation-delay: 0.3s;">
+                <div class="section-title" data-en="Roots & Heritage" data-hi="मूल और विरासत">Roots & Heritage</div>
+                
+                <div class="info-row">
+                    <span class="label" data-en="Ancestral Home" data-hi="पैतृक निवास">Ancestral Home</span> 
+                    <span class="value" data-en="Ladkana (Panjudero), Sindh" data-hi="लड़काना (पंजुदेरो), सिंध">Ladkana (Panjudero), Sindh</span>
+                </div>
+                
+                <div class="info-row">
+                    <span class="label" data-en="Nukh" data-hi="नख">Nukh</span> 
+                    <span class="value" data-en="Dadani-Lulla / Nanani-Kukreja" data-hi="दादाणी-लुल्ला / ननाणी-कुकरेजा">Dadani-Lulla / Nanani-Kukreja</span>
+                </div>
+                
+                <div class="info-row">
+                    <span class="label" data-en="Maternal Home" data-hi="ननिहाल">Maternal Home</span> 
+                    <span class="value" data-en="Late Shri Nandlal Dhanwani (Satna)" data-hi="स्व. श्री नंदलाल धनवानी (सतना)">Late Shri Nandlal Dhanwani (Satna)</span>
+                </div>
+            </div>
+
+            <!-- Business & Contact -->
+            <div class="glass-card fade-in-up" style="animation-delay: 0.4s;">
+                <div class="section-title" data-en="Contact & Business" data-hi="संपर्क और व्यवसाय">Contact & Business</div>
+                
+                <div class="info-row">
+                    <span class="label" data-en="Own Business" data-hi="अपना व्यवसाय">Own Business</span> 
+                    <span class="value" style="color: var(--color-accent-gold); font-weight: 700;" data-en="Shri Krishna Medical & Distrib." data-hi="श्री कृष्णा मेडिकल एंड डिस्ट्रीब.">Shri Krishna Medical & Distrib.</span>
+                </div>
+                
+                <div class="info-row">
+                    <span class="label" data-en="Residence" data-hi="निवास">Residence</span> 
+                    <span class="value" data-en="Krishna Niwas, Sindhi Colony, Bhusawal" data-hi="कृष्णा निवास, सिंधी कॉलोनी, भुसावल">Krishna Niwas, Sindhi Colony, Bhusawal</span>
+                </div>
+                
+                <div class="info-row">
+                    <span class="label" data-en="Mobile" data-hi="मोबाइल">Mobile</span> 
+                    <span class="value">9325490399 / 9423903553</span>
+                </div>
+                
+                <div class="info-row">
+                    <span class="label" data-en="Landline" data-hi="लैंडलाइन">Landline</span> 
+                    <span class="value">02582240519</span>
+                </div>
+            </div>
+
+            <!-- Extended Family Business (Full Width) -->
+            <div class="glass-card fade-in-up" style="grid-column: 1 / -1; animation-delay: 0.5s;">
+                <div class="section-title" data-en="Businesses" data-hi="व्यवसाय">Businesses</div>
+                <div class="business-list">
+                    
+                    <div class="business-item">
+                        <strong data-en="Shri Gyanchand M. Lekhwani" data-hi="श्री ज्ञानचंद एम. लेखवानी">Shri Gyanchand M. Lekhwani</strong> <span>-</span> &nbsp; <span class="biz-name" data-en="Apsara Nx" data-hi="अप्सरा Nx">Apsara Nx</span>
+                    </div>
+
+                    <div class="business-item">
+                        <strong data-en="Shri Gopaldas M. Lekhwani" data-hi="श्री गोपालदास एम. लेखवानी">Shri Gopaldas M. Lekhwani</strong> <span>-</span> &nbsp; <span class="biz-name" data-en="SAI Mall" data-hi="साई मॉल">SAI Mall</span>
+                    </div>
+
+                    <div class="business-item">
+                        <strong data-en="Late Shri Rajkumar M. Lekhwani" data-hi="स्व. श्री राजकुमार एम. लेखवानी">Late Shri Rajkumar M. Lekhwani</strong> <span>-</span> &nbsp; <span class="biz-name" data-en="Monica Collection" data-hi="मोनिका कलेक्शन">Monica Collection</span>
+                    </div>
+
+                    <div class="business-item">
+                        <strong data-en="Late Shri Maheshkumar M. Lekhwani" data-hi="स्व. श्री महेशकुमार एम. लेखवानी">Late Shri Maheshkumar M. Lekhwani</strong> <span>-</span> &nbsp; <span class="biz-name" data-en="Ravi Sadiyan" data-hi="रवि साड़ियाँ">Ravi Sadiyan</span>
+                    </div>
+
+                    <div class="business-item">
+                        <strong data-en="Shri Sureshkumar M. Lekhwani" data-hi="श्री सुरेशकुमार एम. लेखवानी">Shri Sureshkumar M. Lekhwani</strong> <span>-</span> &nbsp; <span class="biz-name" data-en="Ravi Fancy" data-hi="रवि फैंसी">Ravi Fancy</span>
+                    </div>
+
+                    <div class="business-item">
+                        <strong data-en="Shri Nareshkumar M. Lekhwani" data-hi="श्री नरेशकुमार एम. लेखवानी">Shri Nareshkumar M. Lekhwani</strong> <span>-</span> &nbsp; <span class="biz-name" data-en="Apsara Nx" data-hi="अप्सरा Nx">Apsara Nx</span>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Bottom CTA -->
+        <div class="cta-container fade-in-up" style="animation-delay: 0.6s;">
+            <a href="https://wa.me/919999999999?text=Radha%20Soami,%20I%20would%20like%20to%20request%20the%20profile%20pictures." target="_blank" class="btn-cta" data-en="Request Profile Pictures" data-hi="प्रोफाइल पिक्चर्स का अनुरोध करें">
+                Request Profile Pictures
+            </a>
+        </div>
+
+    </main>
+
+    <script>
+        // Particle Logic
+        function createParticles() {
+            const container = document.getElementById('particle-field');
+            const particleCount = 20;
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                const size = Math.random() * 6 + 2;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.animationDuration = `${Math.random() * 15 + 10}s`;
+                particle.style.animationDelay = `${Math.random() * -20}s`;
+                container.appendChild(particle);
+            }
+        }
+        createParticles();
+
+        // Language Logic
+        let currentLang = 'en';
+
+        function setLang(lang) {
+            currentLang = lang;
+            const elements = document.querySelectorAll('[data-' + lang + ']');
+            
+            elements.forEach(el => {
+                el.innerHTML = el.getAttribute('data-' + lang);
+            });
+
+            // Handle Placeholder Translation Logic
+            const passInput = document.getElementById('passCode');
+            if(passInput) {
+                if(lang === 'hi') {
+                    passInput.setAttribute('onblur', "this.placeholder='पासवर्ड दर्ज करें'");
+                    if(document.activeElement !== passInput) {
+                        passInput.placeholder = 'पासवर्ड दर्ज करें';
+                    }
+                } else {
+                    passInput.setAttribute('onblur', "this.placeholder='Enter Password'");
+                    if(document.activeElement !== passInput) {
+                        passInput.placeholder = 'Enter Password';
+                    }
+                }
+            }
+
+            // Update buttons state
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`.lang-btn[onclick="setLang('${lang}')"]`).classList.add('active');
+        }
+
+        // Auth Logic
+        function checkPassword() {
+            const val = document.getElementById('passCode').value;
+            const auth = document.getElementById('auth-screen');
+            const main = document.getElementById('main-container');
+            const header = document.getElementById('top-header');
+            const langSwitch = document.getElementById('lang-switch');
+
+            if (val.toLowerCase() === 'ankit1996') {
+                auth.style.opacity = '0';
+                auth.style.pointerEvents = 'none';
+                setTimeout(() => {
+                    auth.style.display = 'none';
+                    header.style.opacity = '1';
+                    header.style.transform = 'translateY(0)';
+                    main.style.opacity = '1';
+                    main.style.pointerEvents = 'all';
+                    langSwitch.style.opacity = '1'; // Show Lang Switcher
+                    langSwitch.style.pointerEvents = 'all';
+                }, 500);
+            } else {
+                const card = document.querySelector('.auth-card');
+                card.style.transform = 'translateX(10px)';
+                setTimeout(() => card.style.transform = 'translateX(-10px)', 100);
+                setTimeout(() => card.style.transform = 'translateX(0)', 200);
+            }
+        }
+
+        document.getElementById('passCode').addEventListener('keypress', (e) => {
+            if(e.key === 'Enter') checkPassword();
+        });
+    </script>
+</body>
+</html>
