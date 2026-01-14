@@ -319,8 +319,8 @@
 
         .business-item:last-child { border-bottom: none; }
 
-        .business-item span {
-            font-weight: 700;
+        .business-item strong {
+            font-weight: 500; /* Removed bold (700) */
             color: #000; /* Owner Name in Black */
             margin-right: 5px;
         }
@@ -355,8 +355,8 @@
         .auth-card h2 {
             font-family: 'Playfair Display', serif;
             color: var(--color-accent-gold);
-            font-size: 2.2rem;
-            margin-bottom: 0.5rem;
+            font-size: 1.8rem;
+            margin-bottom: 0.8rem;
         }
 
         .input-wrapper {
@@ -504,8 +504,16 @@
                 <i class="fas fa-praying-hands"></i>
             </div>
             <h2 data-en="Radha Soami" data-hi="राधा स्वामी">Radha Soami</h2>
-            <p data-en="Protected Access" data-hi="सुरक्षित प्रवेश" style="color: var(--color-text-light); margin-bottom: 1rem;">Protected Access</p>
+            
+            <!-- Stylized Name Block -->
+            <div style="margin-bottom: 1.5rem;">
+                <span data-en="Biodata of" data-hi="बायोडेटा" style="display: block; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; color: var(--color-text-light); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 2px;">Biodata of</span>
+                <span data-en="Ankit Lekhwani" data-hi="अंकित लेखवानी" style="display: block; font-family: 'Playfair Display', serif; font-size: 2.2rem; color: var(--color-text-main); font-weight: 700; line-height: 1.1;">Ankit Lekhwani</span>
+            </div>
+
+            <p data-en="Protected Access" data-hi="सुरक्षित प्रवेश" style="color: var(--color-text-light); margin-bottom: 1rem; font-size: 0.9rem;">Protected Access</p>
             <div class="input-wrapper">
+                <!-- Added focus/blur logic here -->
                 <input type="password" id="passCode" placeholder="Enter Password" onfocus="this.placeholder=''" onblur="this.placeholder='Enter Password'">
             </div>
             <button class="btn-primary" onclick="checkPassword()" data-en="Unlock Profile" data-hi="प्रोफाइल खोलें">Unlock Profile</button>
@@ -577,13 +585,14 @@
                 
                 <div class="info-row">
                     <span class="label" data-en="Sister" data-hi="बहन">Sister</span> 
-                    <span class="value" data-en="1 (Married) - Varangaon" data-hi="1 (विवाहित) - वरणगांव">1 (Married) - Varangaon</span>
+                    <span class="value" data-en="Priya, Married to Shri Pankaj G. Khushalani (Varangaon)" data-hi="प्रिया, श्री पंकज जी. खुशालानी (वरणगांव) से विवाहित">Married to Shri Pankaj G. Khushalani (Varangaon)</span>
                 </div>
                 
                 <div class="info-row">
                     <span class="label" data-en="Brother" data-hi="भाई">Brother</span> 
                     <span class="value">
-                        <span data-en="Pravin S. Lekhwani (Married)" data-hi="प्रवीण एस. लेखवानी (विवाहित)">Pravin S. Lekhwani (Married)</span><br>
+                        <span data-en="Pravin S. Lekhwani" data-hi="प्रवीण एस. लेखवानी">Pravin S. Lekhwani</span><br>
+                        <small style="opacity:0.8" data-en="(Married)" data-hi="(विवाहित)">(Married)</small>
                     </span>
                 </div>
             </div>
@@ -639,27 +648,27 @@
                 <div class="business-list">
                     
                     <div class="business-item">
-                        <span data-en="Shri Gyanchand M. Lekhwani" data-hi="श्री ज्ञानचंद एम. लेखवानी">Shri Gyanchand M. Lekhwani</span> <span>-</span> &nbsp; <span class="biz-name" data-en="Apsara Nx" data-hi="अप्सरा Nx">Apsara Nx</span>
+                        <strong data-en="Shri Gyanchand M. Lekhwani" data-hi="श्री ज्ञानचंद एम. लेखवानी">Shri Gyanchand M. Lekhwani</strong> <span>-</span> &nbsp; <span class="biz-name" data-en="Apsara Nx" data-hi="अप्सरा Nx">Apsara Nx</span>
                     </div>
 
                     <div class="business-item">
-                        <span data-en="Shri Gopaldas M. Lekhwani" data-hi="श्री गोपालदास एम. लेखवानी">Shri Gopaldas M. Lekhwani</span> <span>-</span> &nbsp; <span class="biz-name" data-en="SAI Mall" data-hi="साई मॉल">SAI Mall</span>
+                        <strong data-en="Shri Gopaldas M. Lekhwani" data-hi="श्री गोपालदास एम. लेखवानी">Shri Gopaldas M. Lekhwani</strong> <span>-</span> &nbsp; <span class="biz-name" data-en="SAI Mall" data-hi="साई मॉल">SAI Mall</span>
                     </div>
 
                     <div class="business-item">
-                        <span data-en="Late Shri Rajkumar M. Lekhwani" data-hi="स्व. श्री राजकुमार एम. लेखवानी">Late Shri Rajkumar M. Lekhwani</span> <span>-</span> &nbsp; <span class="biz-name" data-en="Monica Collection" data-hi="मोनिका कलेक्शन">Monica Collection</span>
+                        <strong data-en="Late Shri Rajkumar M. Lekhwani" data-hi="स्व. श्री राजकुमार एम. लेखवानी">Late Shri Rajkumar M. Lekhwani</strong> <span>-</span> &nbsp; <span class="biz-name" data-en="Monica Collection" data-hi="मोनिका कलेक्शन">Monica Collection</span>
                     </div>
 
                     <div class="business-item">
-                        <span data-en="Late Shri Maheshkumar M. Lekhwani" data-hi="स्व. श्री महेशकुमार एम. लेखवानी">Late Shri Maheshkumar M. Lekhwani</span> <span>-</span> &nbsp; <span class="biz-name" data-en="Ravi Sadiyan" data-hi="रवि साड़ियाँ">Ravi Sadiyan</span>
+                        <strong data-en="Late Shri Maheshkumar M. Lekhwani" data-hi="स्व. श्री महेशकुमार एम. लेखवानी">Late Shri Maheshkumar M. Lekhwani</strong> <span>-</span> &nbsp; <span class="biz-name" data-en="Ravi Sadiyan" data-hi="रवि साड़ियाँ">Ravi Sadiyan</span>
                     </div>
 
                     <div class="business-item">
-                        <span data-en="Shri Sureshkumar M. Lekhwani" data-hi="श्री सुरेशकुमार एम. लेखवानी">Shri Sureshkumar M. Lekhwani</span> <span>-</span> &nbsp; <span class="biz-name" data-en="Ravi Fancy" data-hi="रवि फैंसी">Ravi Fancy</span>
+                        <strong data-en="Shri Sureshkumar M. Lekhwani" data-hi="श्री सुरेशकुमार एम. लेखवानी">Shri Sureshkumar M. Lekhwani</strong> <span>-</span> &nbsp; <span class="biz-name" data-en="Ravi Fancy" data-hi="रवि फैंसी">Ravi Fancy</span>
                     </div>
 
                     <div class="business-item">
-                        <span data-en="Shri Nareshkumar M. Lekhwani" data-hi="श्री नरेशकुमार एम. लेखवानी">Shri Nareshkumar M. Lekhwani</span> <span>-</span> &nbsp; <span class="biz-name" data-en="Apsara Nx" data-hi="अप्सरा Nx">Apsara Nx</span>
+                        <strong data-en="Shri Nareshkumar M. Lekhwani" data-hi="श्री नरेशकुमार एम. लेखवानी">Shri Nareshkumar M. Lekhwani</strong> <span>-</span> &nbsp; <span class="biz-name" data-en="Apsara Nx" data-hi="अप्सरा Nx">Apsara Nx</span>
                     </div>
 
                 </div>
@@ -735,7 +744,7 @@
             const header = document.getElementById('top-header');
             const langSwitch = document.getElementById('lang-switch');
 
-            if (val.toLowerCase() === 'ankit1996') {
+            if (val.toLowerCase() === 'ankit0620') {
                 auth.style.opacity = '0';
                 auth.style.pointerEvents = 'none';
                 setTimeout(() => {
