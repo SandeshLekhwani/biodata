@@ -262,9 +262,17 @@
 
         .grid-layout {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            /* Default to 1 column for mobile */
+            grid-template-columns: 1fr; 
             gap: 2rem;
             margin-bottom: 2rem;
+        }
+
+        /* Desktop Grid Enforced 2x2 */
+        @media (min-width: 900px) {
+            .grid-layout {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
 
         .info-row {
@@ -384,13 +392,36 @@
             box-shadow: 0 4px 15px rgba(197, 160, 89, 0.3);
         }
         
-        /* --- Bottom CTA Button (Updated to Match .btn-primary) --- */
+        /* --- Bottom CTA Button (Sticky on Mobile) --- */
         .cta-container {
             text-align: center;
+            /* Default for Desktop */
             margin-top: 1rem;
             margin-bottom: 2rem;
             position: relative;
-            z-index: 2;
+            z-index: 500;
+            transition: all 0.5s ease;
+        }
+
+        /* Mobile Sticky Behavior Styles */
+        @media (max-width: 900px) {
+            .cta-container {
+                position: fixed;
+                bottom: 20px;
+                left: 0;
+                width: 100%;
+                margin: 0;
+                padding: 0 1rem;
+                opacity: 0; /* Hidden initially */
+                transform: translateY(20px);
+                pointer-events: none;
+            }
+
+            .cta-container.visible {
+                opacity: 1;
+                transform: translateY(0);
+                pointer-events: auto;
+            }
         }
 
         .btn-cta {
@@ -427,7 +458,7 @@
         /* Responsive */
         @media (max-width: 600px) {
             .header-panel { width: 95%; padding: 0.8rem 1rem; margin-top: 30px; }
-            .header-name { font-size: 1.4rem; } /* Adjusted for mobile */
+            .header-name { font-size: 1.4rem; } 
             .header-top-text { font-size: 0.7rem; }
             
             .info-row { grid-template-columns: 1fr; gap: 4px; }
@@ -437,12 +468,19 @@
             .glass-card { padding: 1.5rem; }
             .glass-card::before { opacity: 0.15; }
             
-            .lang-switch-container { top: 1rem; right: 50%; transform: translateX(50%); top: 10px; padding: 3px 8px; border-radius: 12px; }
+            /* Smaller, fixed top-right for mobile */
+            .lang-switch-container { 
+                top: 15px; 
+                right: 15px; 
+                transform: scale(0.8); 
+                padding: 3px 8px; 
+                border-radius: 12px; 
+            }
             
             #main-container { padding-top: 10rem; }
             
             /* Center CTA on mobile */
-            .btn-cta { width: 100%; padding: 0.8rem; font-size: 1rem; }
+            .btn-cta { width: 100%; padding: 0.9rem; font-size: 1rem; box-shadow: 0 8px 30px rgba(0,0,0,0.2); }
         }
     </style>
 </head>
@@ -468,7 +506,6 @@
             <h2 data-en="Radha Soami" data-hi="राधा स्वामी">Radha Soami</h2>
             <p data-en="Protected Access" data-hi="सुरक्षित प्रवेश" style="color: var(--color-text-light); margin-bottom: 1rem;">Protected Access</p>
             <div class="input-wrapper">
-                <!-- Added focus/blur logic here -->
                 <input type="password" id="passCode" placeholder="Enter Password" onfocus="this.placeholder=''" onblur="this.placeholder='Enter Password'">
             </div>
             <button class="btn-primary" onclick="checkPassword()" data-en="Unlock Profile" data-hi="प्रोफाइल खोलें">Unlock Profile</button>
@@ -632,7 +669,7 @@
         </div>
 
         <!-- Bottom CTA -->
-        <div class="cta-container fade-in-up" style="animation-delay: 0.6s;">
+        <div id="sticky-cta" class="cta-container">
             <a href="https://wa.me/919999999999?text=Radha%20Soami,%20I%20would%20like%20to%20request%20the%20profile%20pictures." target="_blank" class="btn-cta" data-en="Request Profile Pictures" data-hi="प्रोफाइल पिक्चर्स का अनुरोध करें">
                 Request Profile Pictures
             </a>
@@ -721,6 +758,20 @@
 
         document.getElementById('passCode').addEventListener('keypress', (e) => {
             if(e.key === 'Enter') checkPassword();
+        });
+
+        // Scroll Logic for Sticky CTA on Mobile
+        const mainContainer = document.getElementById('main-container');
+        const stickyCTA = document.getElementById('sticky-cta');
+
+        mainContainer.addEventListener('scroll', () => {
+            if (window.innerWidth <= 900) { // Only on mobile/tablet
+                if (mainContainer.scrollTop > 50) {
+                    stickyCTA.classList.add('visible');
+                } else {
+                    stickyCTA.classList.remove('visible');
+                }
+            }
         });
     </script>
 </body>
