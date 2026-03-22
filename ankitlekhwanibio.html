@@ -105,8 +105,8 @@
         }
         
         #lang-switch {
-            opacity: 0; 
-            pointer-events: none;
+            opacity: 1; 
+            pointer-events: all;
             transition: opacity 0.3s;
         }
 
@@ -146,8 +146,8 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            opacity: 0;
-            transform: translateY(-20px);
+            opacity: 1;
+            transform: translateY(0);
             transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
         }
 
@@ -215,18 +215,14 @@
             transform: scale(1.5) rotate(-5deg); /* Artistic positioning */
         }
 
-        /* Remove pattern from Auth Card */
-        .auth-card::before {
-            display: none;
-        }
 
         /* --- Main Content --- */
         #main-container {
             width: 100%;
             max-width: 1000px;
             padding: 10rem 1.5rem 5rem;
-            opacity: 0;
-            pointer-events: none;
+            opacity: 1;
+            pointer-events: all;
             transition: opacity 0.8s ease;
             height: 100vh;
             overflow-y: auto;
@@ -334,65 +330,6 @@
             letter-spacing: 0.5px;
         }
 
-        /* --- Auth Screen --- */
-        #auth-screen {
-            position: fixed;
-            inset: 0;
-            z-index: 1000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: rgba(248, 249, 250, 0.9);
-            backdrop-filter: blur(20px);
-            transition: opacity 0.6s ease;
-        }
-
-        .auth-card {
-            width: 90%;
-            max-width: 400px;
-            text-align: center;
-            padding: 3rem 2rem;
-        }
-
-        .auth-card h2 {
-            font-family: 'Playfair Display', serif;
-            color: var(--color-accent-gold);
-            font-size: 1.8rem;
-            margin-bottom: 0.8rem;
-        }
-
-        .input-wrapper {
-            margin: 2rem 0;
-        }
-
-        .input-wrapper input {
-            width: 100%;
-            padding: 1rem;
-            border-radius: var(--radius-pill);
-            border: 1px solid rgba(0,0,0,0.1);
-            background: white;
-            font-size: 1rem;
-            text-align: center;
-            outline: none;
-            transition: border 0.3s;
-        }
-        
-        .input-wrapper input:focus {
-            border-color: var(--color-accent-gold);
-        }
-
-        .btn-primary {
-            background: var(--color-accent-gold);
-            color: white;
-            border: none;
-            padding: 0.9rem 2.5rem;
-            border-radius: var(--radius-pill);
-            font-weight: 600;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(197, 160, 89, 0.3);
-        }
         
         /* --- Bottom CTA Button (Sticky on Mobile) --- */
         .cta-container {
@@ -497,29 +434,6 @@
     <div id="lang-switch" class="lang-switch-container">
         <button class="lang-btn active" onclick="setLang('en')">EN</button>
         <button class="lang-btn" onclick="setLang('hi')">हिंदी</button>
-    </div>
-
-    <!-- Password Screen -->
-    <div id="auth-screen">
-        <div class="glass-card auth-card">
-            <div style="margin-bottom: 1rem; color: var(--color-accent-gold); font-size: 2rem;">
-                <i class="fas fa-praying-hands"></i>
-            </div>
-            <h2 data-en="Radha Soami" data-hi="राधा स्वामी">Radha Soami</h2>
-            
-            <!-- Stylized Name Block -->
-            <div style="margin-bottom: 1.5rem;">
-                <span data-en="Biodata of" data-hi="बायोडेटा" style="display: block; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; color: var(--color-text-light); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 2px;">Biodata of</span>
-                <span data-en="Ankit Lekhwani" data-hi="अंकित लेखवानी" style="display: block; font-family: 'Playfair Display', serif; font-size: 2.2rem; color: var(--color-text-main); font-weight: 700; line-height: 1.1;">Ankit Lekhwani</span>
-            </div>
-
-            <p data-en="Protected Access" data-hi="सुरक्षित प्रवेश" style="color: var(--color-text-light); margin-bottom: 1rem; font-size: 0.9rem;">Protected Access</p>
-            <div class="input-wrapper">
-                <!-- Added focus/blur logic here -->
-                <input type="password" id="passCode" placeholder="Enter Password" onfocus="this.placeholder=''" onblur="this.placeholder='Enter Password'">
-            </div>
-            <button class="btn-primary" onclick="checkPassword()" data-en="Unlock Profile" data-hi="प्रोफाइल खोलें">Unlock Profile</button>
-        </div>
     </div>
 
     <!-- Centered Header -->
@@ -717,58 +631,10 @@
                 el.innerHTML = el.getAttribute('data-' + lang);
             });
 
-            // Handle Placeholder Translation Logic
-            const passInput = document.getElementById('passCode');
-            if(passInput) {
-                if(lang === 'hi') {
-                    passInput.setAttribute('onblur', "this.placeholder='पासवर्ड दर्ज करें'");
-                    if(document.activeElement !== passInput) {
-                        passInput.placeholder = 'पासवर्ड दर्ज करें';
-                    }
-                } else {
-                    passInput.setAttribute('onblur', "this.placeholder='Enter Password'");
-                    if(document.activeElement !== passInput) {
-                        passInput.placeholder = 'Enter Password';
-                    }
-                }
-            }
-
             // Update buttons state
             document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
             document.querySelector(`.lang-btn[onclick="setLang('${lang}')"]`).classList.add('active');
         }
-
-        // Auth Logic
-        function checkPassword() {
-            const val = document.getElementById('passCode').value;
-            const auth = document.getElementById('auth-screen');
-            const main = document.getElementById('main-container');
-            const header = document.getElementById('top-header');
-            const langSwitch = document.getElementById('lang-switch');
-
-            if (val.toLowerCase() === 'ankit0620') {
-                auth.style.opacity = '0';
-                auth.style.pointerEvents = 'none';
-                setTimeout(() => {
-                    auth.style.display = 'none';
-                    header.style.opacity = '1';
-                    header.style.transform = 'translateY(0)';
-                    main.style.opacity = '1';
-                    main.style.pointerEvents = 'all';
-                    langSwitch.style.opacity = '1'; // Show Lang Switcher
-                    langSwitch.style.pointerEvents = 'all';
-                }, 500);
-            } else {
-                const card = document.querySelector('.auth-card');
-                card.style.transform = 'translateX(10px)';
-                setTimeout(() => card.style.transform = 'translateX(-10px)', 100);
-                setTimeout(() => card.style.transform = 'translateX(0)', 200);
-            }
-        }
-
-        document.getElementById('passCode').addEventListener('keypress', (e) => {
-            if(e.key === 'Enter') checkPassword();
-        });
 
         // Scroll Logic for Sticky CTA on Mobile
         const mainContainer = document.getElementById('main-container');
