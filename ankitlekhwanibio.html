@@ -496,7 +496,59 @@
             #main-container { padding-top: 10rem; }
             
             /* Center CTA on mobile */
-            .btn-cta { width: 100%; padding: 0.9rem; font-size: 1rem; box-shadow: 0 8px 30px rgba(0,0,0,0.2); }
+            .cta-container { display: flex; flex-direction: column; gap: 10px; }
+            .btn-cta { width: 100%; padding: 0.9rem; font-size: 1rem; box-shadow: 0 8px 30px rgba(0,0,0,0.2); margin-left: 0 !important; }
+        }
+
+        /* --- Print Styles --- */
+        @media print {
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                color-adjust: exact !important;
+            }
+            body {
+                height: auto !important;
+                overflow: visible !important;
+                background: #f8f9fa !important;
+                display: block !important;
+            }
+            .background-container, #particle-field, .lang-switch-container, .cta-container {
+                display: none !important;
+            }
+            #main-container {
+                height: auto !important;
+                overflow: visible !important;
+                padding: 0 !important;
+                display: block !important;
+            }
+            .header-panel {
+                position: static !important;
+                transform: none !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                margin: 1rem 0 2rem 0 !important;
+                box-shadow: none !important;
+                backdrop-filter: none !important;
+                -webkit-backdrop-filter: none !important;
+                border: 1px solid rgba(197, 160, 89, 0.3) !important;
+                background: #fff !important;
+            }
+            .grid-layout {
+                display: block !important;
+            }
+            .glass-card {
+                break-inside: avoid !important;
+                page-break-inside: avoid !important;
+                transform: none !important;
+                box-shadow: none !important;
+                border: 1px solid rgba(197, 160, 89, 0.3) !important;
+                margin-bottom: 1.5rem !important;
+                background: #fff !important;
+            }
+            .profile-photo-card, .bottom-photo-card {
+                padding: 1rem !important;
+            }
         }
     </style>
 </head>
@@ -681,6 +733,13 @@
                 </div>
             </div>
 
+            <!-- Additional Bottom Photo -->
+            <div class="glass-card bottom-photo-card fade-in-up" style="animation-delay: 0.7s;">
+                <div class="bottom-photo-wrapper">
+                    <img src="ankit3.jpg" alt="Ankit Lekhwani">
+                </div>
+            </div>
+
         </div>
 
         <!-- Bottom CTA -->
@@ -688,6 +747,9 @@
             <a href="https://wa.me/918329085570?text=Radha%20Soami,%20I%20would%20like%20to%20request%20more%20information." target="_blank" class="btn-cta" data-en="Request More Infomaiton" data-hi="प्रोफाइल का अनुरोध करें">
                 Request More Information
             </a>
+            <button onclick="window.print()" class="btn-cta" id="export-btn" data-en="Export to PDF" data-hi="पीडीएफ में निर्यात करें" style="margin-left: 10px; background-color: var(--color-accent-dark);">
+                <i class="fas fa-file-pdf"></i> Export to PDF
+            </button>
         </div>
 
     </main>
