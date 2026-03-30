@@ -334,13 +334,24 @@
 
         .profile-photo-wrapper {
             position: relative;
-            width: 220px;
-            height: 220px;
-            border-radius: 50%;
+            width: 280px;
+            height: 360px;
+            border-radius: 1rem;
             overflow: hidden;
             border: 4px solid var(--color-accent-gold);
             box-shadow: 0 8px 32px rgba(197, 160, 89, 0.3);
             animation: blendIn 1.2s cubic-bezier(0.2, 1, 0.3, 1) forwards;
+        }
+
+        .header-tag {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--color-accent-gold);
+            margin-top: 0.5rem;
+            letter-spacing: 1px;
+            background: rgba(197, 160, 89, 0.1);
+            padding: 2px 12px;
+            border-radius: 10px;
         }
 
         .profile-photo-wrapper img {
@@ -471,6 +482,30 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        .fade-in-left-to-right {
+            opacity: 0;
+            transform: translateX(-30px);
+            animation: fadeInLeftToRight 0.8s cubic-bezier(0.2, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes fadeInLeftToRight {
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .combined-info-layout {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 2.5rem;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        @media (max-width: 900px) {
+            .combined-info-layout { grid-template-columns: 1fr; gap: 2rem; }
+            .photo-side { order: -1; display: flex; justify-content: center; }
+        }
+
         /* Responsive */
         @media (max-width: 600px) {
             .header-panel { width: 95%; padding: 0.8rem 1rem; margin-top: 30px; }
@@ -501,53 +536,143 @@
         }
 
         /* --- Print Styles --- */
+        /* --- Portfolio PDF Portfolio Overhaul --- */
+        /* --- Aggressive PDF Portfolio Overhaul --- */
         @media print {
+            @page {
+                size: A4;
+                margin: 0;
+            }
+            
+            /* Global Contrast & Reset */
             * {
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
                 color-adjust: exact !important;
+                opacity: 1 !important;
+                visibility: visible !important;
+                transition: none !important;
+                animation: none !important;
+                box-shadow: none !important;
             }
-            body {
+
+            html, body {
                 height: auto !important;
+                min-height: 100% !important;
                 overflow: visible !important;
-                background: #f8f9fa !important;
-                display: block !important;
+                background: #fff !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                width: 100% !important;
+                color: #222 !important; /* Base text color */
             }
-            .background-container, #particle-field, .lang-switch-container, .cta-container {
+
+            #main-container {
+                display: block !important;
+                height: auto !important;
+                min-height: 0 !important;
+                overflow: visible !important;
+                width: 100% !important;
+                max-width: none !important;
+                padding: 60px 40px !important;
+                margin: 0 !important;
+                position: static !important;
+            }
+
+            .background-container, #particle-field, .lang-switch-container, .cta-container, #sticky-cta {
                 display: none !important;
             }
-            #main-container {
-                height: auto !important;
-                overflow: visible !important;
-                padding: 0 !important;
-                display: block !important;
-            }
+
+            /* Content Layout */
             .header-panel {
                 position: static !important;
-                transform: none !important;
+                display: block !important;
+                text-align: center !important;
                 width: 100% !important;
-                max-width: 100% !important;
-                margin: 1rem 0 2rem 0 !important;
-                box-shadow: none !important;
-                backdrop-filter: none !important;
-                -webkit-backdrop-filter: none !important;
-                border: 1px solid rgba(197, 160, 89, 0.3) !important;
-                background: #fff !important;
+                margin: 0 0 2rem 0 !important;
+                padding: 0 0 1.5rem 0 !important;
+                border: none !important;
+                border-bottom: 2px solid #c5a059 !important; /* Gold divider */
+                background: transparent !important;
             }
+
+            .header-name {
+                font-size: 2.2rem !important;
+                color: #c5a059 !important; /* Gold name */
+                margin-bottom: 0.5rem !important;
+            }
+
+            .header-top-text {
+                color: #2c3e50 !important;
+                font-size: 0.9rem !important;
+                letter-spacing: 2px !important;
+            }
+
             .grid-layout {
                 display: block !important;
+                width: 100% !important;
             }
+
             .glass-card {
-                break-inside: avoid !important;
-                page-break-inside: avoid !important;
-                transform: none !important;
-                box-shadow: none !important;
-                border: 1px solid rgba(197, 160, 89, 0.3) !important;
-                margin-bottom: 1.5rem !important;
-                background: #fff !important;
+                display: block !important;
+                width: 100% !important;
+                background: transparent !important;
+                border: none !important;
+                margin-bottom: 2rem !important;
+                break-inside: avoid;
             }
-            .profile-photo-card, .bottom-photo-card {
-                padding: 1rem !important;
+
+            .section-title {
+                color: #c5a059 !important; /* Gold headings */
+                margin-top: 0 !important;
+                border-bottom: 1px solid #c5a05933 !important;
+                margin-bottom: 1.2rem !important;
+                font-size: 1.4rem !important;
+                text-transform: uppercase !important;
+            }
+
+            .label {
+                color: #c5a059 !important; /* Gold labels */
+                font-weight: 700 !important;
+                font-size: 0.85rem !important;
+            }
+
+            .value {
+                color: #222 !important;
+                font-weight: 500 !important;
+            }
+
+            /* Specifically keep the bolded firm name dark for readability */
+            b, strong { color: #000 !important; }
+
+            .combined-info-layout {
+                display: flex !important;
+                flex-direction: row-reverse !important; /* Swaps details and photo */
+                justify-content: space-between !important;
+                align-items: flex-start !important;
+                gap: 2rem !important;
+            }
+
+            .details-side { flex: 1 !important; }
+            .photo-side { width: 220px !important; }
+
+            .profile-photo-wrapper {
+                width: 200px !important;
+                height: 260px !important;
+                border: 2px solid #c5a05933 !important; /* Subtle gold border */
+                border-radius: 8px !important;
+                overflow: hidden !important;
+            }
+
+            .icon-box i {
+                color: #c5a059 !important; /* Gold icons */
+            }
+
+            .bottom-photo-wrapper {
+                max-width: 450px !important;
+                margin: 1.5rem auto !important;
+                border: 2px solid #f0f0f0 !important;
+                border-radius: 12px !important;
             }
         }
     </style>
@@ -574,45 +699,48 @@
     <main id="main-container">
         <div class="grid-layout">
 
-            <!-- Profile Photo -->
-            <div class="glass-card profile-photo-card fade-in-up" style="animation-delay: 0s;">
-                <div class="profile-photo-wrapper">
-                    <img src="https://sandeshlekhwani.github.io/biodata/ankit1.jpg" alt="Ankit Lekhwani">
-                </div>
-            </div>
-            
-            <!-- Personal Details -->
-            <div class="glass-card fade-in-up" style="animation-delay: 0.1s;">
-                <div class="section-title" data-en="Personal Details" data-hi="व्यक्तिगत विवरण">Personal Details</div>
-                
-                <div class="info-row">
-                    <span class="label" data-en="Date of Birth" data-hi="जन्म तिथि">Date of Birth</span> 
-                    <span class="value" data-en="05 May 1996" data-hi="05 मई 1996">05 May 1996</span>
-                </div>
-                
-                <div class="info-row">
-                    <span class="label" data-en="Time of Birth" data-hi="जन्म समय">Time of Birth</span> 
-                    <span class="value" data-en="06:20 A.M." data-hi="06:20 सुबह">06:20 A.M.</span>
-                </div>
-                
-                <div class="info-row">
-                    <span class="label" data-en="Place of Birth" data-hi="जन्म स्थान">Place of Birth</span> 
-                    <span class="value" data-en="Bhusawal" data-hi="भुसावल">Bhusawal</span>
-                </div>
-                
-                <div class="info-row">
-                    <span class="label" data-en="Height" data-hi="ऊंचाई">Height</span> 
-                    <span class="value">5' 11"</span>
-                </div>
-                
-                <div class="info-row">
-                    <span class="label" data-en="Complexion" data-hi="रंग-रूप">Complexion</span> 
-                    <span class="value" data-en="Fair, Sharp & Attractive" data-hi="गोरा, तीक्ष्ण और आकर्षक">Fair, Sharp & Attractive</span>
-                </div>
-                
-                <div class="info-row">
-                    <span class="label" data-en="Education" data-hi="शिक्षा">Education</span> 
-                    <span class="value" data-en="L.L.B - KC Law College, Mumbai" data-hi="एल.एल.बी - के.सी. लॉ कॉलेज, मुंबई">L.L.B - KC Law College, Mumbai</span>
+            <!-- Combined Personal Details & Profile Photo -->
+            <div class="glass-card fade-in-left-to-right" style="grid-column: 1 / -1; animation-delay: 0s;">
+                <div class="combined-info-layout">
+                    <div class="photo-side">
+                        <div class="profile-photo-wrapper">
+                            <img src="https://sandeshlekhwani.github.io/biodata/ankit1.jpg" alt="Ankit Lekhwani">
+                        </div>
+                    </div>
+                    
+                    <div class="details-side">
+                        <div class="section-title" data-en="Personal Details" data-hi="व्यक्तिगत विवरण">Personal Details</div>
+                        
+                        <div class="info-row">
+                            <span class="label" data-en="Date of Birth" data-hi="जन्म तिथि">Date of Birth</span> 
+                            <span class="value" data-en="05 May 1996" data-hi="05 मई 1996">05 May 1996</span>
+                        </div>
+                        
+                        <div class="info-row">
+                            <span class="label" data-en="Time of Birth" data-hi="जन्म समय">Time of Birth</span> 
+                            <span class="value" data-en="06:20 A.M." data-hi="06:20 सुबह">06:20 A.M.</span>
+                        </div>
+                        
+                        <div class="info-row">
+                            <span class="label" data-en="Place of Birth" data-hi="जन्म स्थान">Place of Birth</span> 
+                            <span class="value" data-en="Bhusawal" data-hi="भुसावल">Bhusawal</span>
+                        </div>
+                        
+                        <div class="info-row">
+                            <span class="label" data-en="Height" data-hi="ऊंचाई">Height</span> 
+                            <span class="value">5' 11"</span>
+                        </div>
+                        
+                        <div class="info-row">
+                            <span class="label" data-en="Complexion" data-hi="रंग-रूप">Complexion</span> 
+                            <span class="value" data-en="Fair, Sharp & Attractive" data-hi="गोरा, तीक्ष्ण और आकर्षक">Fair, Sharp & Attractive</span>
+                        </div>
+                        
+                        <div class="info-row">
+                            <span class="label" data-en="Education" data-hi="शिक्षा">Education</span> 
+                            <span class="value" data-en="L.L.B - KC Law College, Mumbai" data-hi="एल.एल.बी - के.सी. लॉ कॉलेज, मुंबई">L.L.B - KC Law College, Mumbai</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -637,7 +765,7 @@
                 
                 <div class="info-row">
                     <span class="label" data-en="Sister" data-hi="बहन">Sister</span> 
-                    <span class="value" data-en="Priya, Married to Shri Pankaj G. Khushalani (Varangaon)" data-hi="प्रिया, श्री पंकज जी. खुशालानी (वरणगांव) से विवाहित">Married to Shri Pankaj G. Khushalani (Varangaon)</span>
+                    <span class="value" data-en="Priya, Married to Shri Pankaj G. Khushalani" data-hi="प्रिया, श्री पंकज जी. खुशालानी से विवाहित">Married to Shri Pankaj G. Khushalani</span>
                 </div>
                 
                 <div class="info-row">
@@ -675,7 +803,7 @@
                 
                 <div class="info-row">
                     <span class="label" data-en="Own Business" data-hi="अपना व्यवसाय">Own Business</span> 
-                    <span class="value" style="color: var(--color-accent-gold); font-weight: 700;" data-en="Shri Krishna Medical & Distrib." data-hi="श्री कृष्णा मेडिकल एंड डिस्ट्रीब.">Shri Krishna Medical & Distrib.</span>
+                    <span class="value" style="color: var(--color-accent-gold); font-weight: 700;" data-en="<strong>Shri Krishna Medical & Distrib.</strong>" data-hi="<strong>श्री कृष्णा मेडिकल एंड डिस्ट्रीब.</strong>"><strong>Shri Krishna Medical & Distrib.</strong></span>
                 </div>
                 
                 <div class="info-row">
@@ -685,7 +813,7 @@
                 
                 <div class="info-row">
                     <span class="label" data-en="Mobile" data-hi="मोबाइल">Mobile</span> 
-                    <span class="value">9325490399 / 9423903553</span>
+                    <span class="value">9325490399</span>
                 </div>
                 
                 <div class="info-row">
@@ -696,7 +824,7 @@
 
             <!-- Extended Family Business (Full Width) -->
             <div class="glass-card fade-in-up" style="grid-column: 1 / -1; animation-delay: 0.5s;">
-                <div class="section-title" data-en="Businesses" data-hi="व्यवसाय">Businesses</div>
+                <div class="section-title" data-en="Uncle's business" data-hi="चाचा का व्यवसाय">Uncle's business</div>
                 <div class="business-list">
                     
                     <div class="business-item">
@@ -737,6 +865,13 @@
             <div class="glass-card bottom-photo-card fade-in-up" style="animation-delay: 0.7s;">
                 <div class="bottom-photo-wrapper">
                     <img src="ankit3.jpg" alt="Ankit Lekhwani">
+                </div>
+            </div>
+
+            <!-- New Bottom Photo -->
+            <div class="glass-card bottom-photo-card fade-in-up" style="animation-delay: 0.8s;">
+                <div class="bottom-photo-wrapper">
+                    <img src="ankit4.jpg" alt="Ankit Lekhwani">
                 </div>
             </div>
 
